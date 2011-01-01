@@ -77,9 +77,13 @@ module GGApi
           :client_id => client_id,
           :client_secret => client_secret,
           :grant_type => 'authorization_code')
-        @access_token =  OAuth2::AccessToken.new(client, request['access_token'], request['refresh_token'])
+        @access_token = OAuth2::AccessToken.new(client, request['access_token'], request['refresh_token'])
       end
       @access_token
+    end
+
+    def access_token=(token)
+      @access_token = OAuth2::AccessToken.new(client, token)
     end
 
     private

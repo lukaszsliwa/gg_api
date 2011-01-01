@@ -1,0 +1,59 @@
+= GG API
+
+Gem dla GG API, które można znaleźć tutaj dla Ruby. Umożliwia pisanie aplikacji
+na platformę aplikacji GG.pl.
+
+== Instalacja
+
+    gem install gg_api
+
+== Użyteczne zasoby
+
+* GG API PHP (https://github.com/GGNetwork/GGAPI/blob/master/php/GGAPI.php)
+* Przykładowa aplikacja w GGAPI-PHP (https://github.com/GGNetwork/GGAPI/blob/master/php/example/index.php)
+* GG-Dev (http://dev.gg.pl/)
+* Opis API (http://dev.gg.pl/api/pages/ggapi.html)
+
+== Przykładowy kod
+
+=== Tworzenie klienta
+
+    gg = GGApi::Client.new('client_id', 'client_secret',
+        :redirect_uri => 'http://localhost:4567/')
+
+=== Przekierowanie na okno autoryzacji (Sinatra)
+
+    redirect gg.authorize_url(:scope => 'users pubdir life')
+
+=== Odczytywanie informacji o profilu
+
+    profile = gg.profile
+
+    puts "#{profile.id}, #{profile.label}, #{profile.name}, #{profile.gender}, #{profile.city}"
+
+=== Odczytywanie listy znajomych aktualnego użytkownika
+
+    gg.friends
+    gg.friends('me')
+    gg.friends('me', :limit => 100)
+    gg.friends(100000, :limit => 10)
+
+    gg.friends.each do |friend|
+        puts "#{friend.id} #{friend.label} #{friend.city} #{friend.birth}"
+    end
+
+=== Publikowanie zdarzenia na pulpicie
+
+    gg.send_event(:message => 'MrPlum', :link => 'http://google.pl')
+
+=== Wysyłanie powiadomienia
+
+    gg.send_notification(:message => 'Powiadomienie')
+
+=== Pobranie avatara
+
+    gg.avatar_url(2080)
+
+== Dodatkowe informacje
+
+http://dev.gg.pl/api/pages/ggapi.html
