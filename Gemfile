@@ -6,4 +6,3 @@ gemspec
 gem 'oauth2'
 gem 'rspec'
 gem 'json'
-gem 'fakeweb'
