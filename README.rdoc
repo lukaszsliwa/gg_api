@@ -1,7 +1,6 @@
 = GG API
 
-Gem dla GG API, które można znaleźć tutaj dla Ruby. Umożliwia pisanie aplikacji
-na platformę aplikacji GG.pl.
+Gem dla GG API. Umożliwia pisanie aplikacji na platformę GG.pl w języku Ruby.
 
 == Instalacja
 

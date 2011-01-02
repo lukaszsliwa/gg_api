@@ -6,11 +6,11 @@ Gem::Specification.new do |s|
   s.name        = "gg_api"
   s.version     = GGApi::VERSION
   s.platform    = Gem::Platform::RUBY
-  s.authors     = ["TODO: Write your name"]
-  s.email       = ["TODO: Write your email address"]
-  s.homepage    = ""
-  s.summary     = %q{TODO: Write a gem summary}
-  s.description = %q{TODO: Write a gem description}
+  s.authors     = ["Łukasz Śliwa"]
+  s.email       = ["lukasz.sliwa@gmail.com"]
+  s.homepage    = "https://github.com/mrplum/gg_api"
+  s.summary     = %q{GG API dla Ruby}
+  s.description = %q{Gem umożliwia tworzenie aplikacjia na platformę gg.pl w języku Ruby.}
 
   s.rubyforge_project = "gg_api"
 

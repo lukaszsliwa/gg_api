@@ -1,6 +1,6 @@
 module GGApi
   class GGObject
-    def initialize(attributes)
+    def initialize(attributes = {})
       if attributes.kind_of?(Hash)
         attributes.each do |k, v|
           instance_eval %{

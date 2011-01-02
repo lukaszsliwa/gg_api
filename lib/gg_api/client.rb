@@ -55,8 +55,8 @@ module GGApi
         request(:post, GG_EVENT_URL, params, header);
     end
 
-    def avatar_url(user, default = nil)
-      "#{GG_AVATARS_URL}/#{user}#{default ? '?default=' + default.to_s : ''}";
+    def avatar_url(user, params = {})
+      "#{GG_AVATARS_URL}/#{user}#{ params.empty? ? '' : '?' + params.map { |k, v| "#{k}=#{v}" }.join('&') }";
     end
 
     def authorize_url(params)
@@ -68,34 +68,40 @@ module GGApi
       !@access_token.nil?
     end
 
-    def access_token(code = nil)
-      unless @access_token
-        code ||= self.code
-        request = request(:post, GG_OAUTH_URL,
-          :code => code,
+    def access_token_params(code)
+      { :code => code,
           :redirect_uri => redirect_uri,
           :client_id => client_id,
           :client_secret => client_secret,
-          :grant_type => 'authorization_code')
+          :grant_type => 'authorization_code' }
+    end
+    
+    def access_token(code = nil)
+      unless @access_token
+        code ||= self.code
+        request = request(:post, GG_OAUTH_URL, access_token_params(code))
         @access_token = OAuth2::AccessToken.new(client, request['access_token'], request['refresh_token'])
       end
       @access_token
     end
 
     def access_token=(token)
-      @access_token = OAuth2::AccessToken.new(client, token)
+      @access_token = token.nil? ? nil : OAuth2::AccessToken.new(client, token)
     end
 
     private
 
-    def refresh_token
-      raise GGApiException.new('require access_token') unless @access_token
-      request = request(:post, GG_OAUTH_URL,
-            :refresh_token => @access_token.refresh_token,
+    def refresh_token_params
+      { :refresh_token => @access_token.refresh_token,
             :grant_type => 'refresh_token',
             :client_id => client_id,
             :client_secret => client_secret,
-            :redirect_uri => redirect_uri)
+            :redirect_uri => redirect_uri }
+    end
+    
+    def refresh_token
+      raise GGApiException.new('require access_token') unless @access_token
+      request = request(:post, GG_OAUTH_URL, refresh_token_params)
       @access_token = OAuth2::AccessToken.new(client, request['access_token'], request['refresh_token'])
     end
 
